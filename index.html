@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memojar</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Additional CSS for new features */
+    .memory-card {
+      border-radius: 8px;
+      padding: 20px;
+      margin: 15px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+    }
+    .memory-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    }
+    .memory-card img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+    .memory-category-icon {
+      width: 24px;
+      height: 24px;
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      border-radius: 50%;
+      padding: 5px;
+      background-color: white;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .memory-category-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .category-personal { border: 2px solid #FFB6C1; }
+    .category-family { border: 2px solid #ADD8E6; }
+    .category-achievement { border: 2px solid #90EE90; }
+    .category-relationship { border: 2px solid #FFD700; }
+
+    .animated-button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .animated-button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <a href="index.html" style="text-decoration: none; color: inherit;">
+      <div class="logo">Memojar</div>
+    </a>
+    <div class="user-profile">
+      <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="User" class="profile-icon">
+    </div>
+  </header>
+
+  <!-- Main Body -->
+  <main>
+    <!-- Add Memories Section -->
+    <section id="add-memory">
+      <h2>Add a Memory</h2>
+      <form id="memory-form">
+        <label for="memory-category">Category</label>
+        <select id="memory-category">
+          <option value="Personal">Personal</option>
+          <option value="Family">Family</option>
+          <option value="Achievement">Achievement</option>
+          <option value="Relationship">Relationship</option>
+        </select>
+        
+        <label for="memory-topic">Memory Topic</label>
+        <input type="text" id="memory-topic" placeholder="Enter memory topic" required>
+        
+        <label for="memory-details">Details</label>
+        <textarea id="memory-details" placeholder="Write about your memory..." required></textarea>
+        
+        <label for="memory-image">Attach Image</label>
+        <input type="file" id="memory-image" accept="image/*">
+        
+        <button type="submit" class="animated-button">Add Memory</button>
+      </form>
+    </section>
+
+    <!-- Display Memories Section -->
+    <section id="memory-list">
+      <h2>My Memories</h2>
+      <div id="memories">
+        <!-- Memory Cards will appear here -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="contact.html">Contact</a>
+      <a href="about.html">About</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms & Conditions</a>
+    </div>
+    <div class="social-media">
+      <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook"></a>
+      <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/733/733558.png" alt="Instagram"></a>
+      <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/145/145807.png" alt="LinkedIn"></a>
+      <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter"></a>
+      <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Snapchat"></a>
+    </div>
+    <div class="copyright">
+      ©2025 Memojar. 
+    </div>
+  </footer>
+
+  <script>
+    // JavaScript to handle adding memory and displaying memory cards
+    document.getElementById('memory-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const category = document.getElementById('memory-category').value;
+      const topic = document.getElementById('memory-topic').value;
+      const details = document.getElementById('memory-details').value;
+      const image = document.getElementById('memory-image').files[0];
+
+      const memoryCard = document.createElement('div');
+      memoryCard.classList.add('memory-card', `category-${category.toLowerCase()}`);
+      
+      if (image) {
+        const img = document.createElement('img');
+        img.src = URL.createObjectURL(image);
+        memoryCard.appendChild(img);
+      }
+
+      const categoryIcon = document.createElement('div');
+      categoryIcon.classList.add('memory-category-icon');
+      // Add category icon based on selection
+      categoryIcon.innerHTML = `<img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="${category}">`;  // Placeholder image
+      memoryCard.appendChild(categoryIcon);
+
+      memoryCard.innerHTML += `
+        <h3>${topic}</h3>
+        <p>${details}</p>
+      `;
+
+      document.getElementById('memories').appendChild(memoryCard);
+
+      // Reset the form
+      document.getElementById('memory-form').reset();
+    });
+  </script>
+</body>
+</html>
